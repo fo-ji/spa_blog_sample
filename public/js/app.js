@@ -72478,6 +72478,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthContext", function() { return AuthContext; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -72491,9 +72493,13 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
+
 var AuthContext = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
+var APP_KEY = 'laravelBlogSample';
 
 var AuthContextProvider = function AuthContextProvider(props) {
+  var token = localStorage.getItem(APP_KEY);
+
   var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState2 = _slicedToArray(_useState, 2),
       user = _useState2[0],
@@ -72504,9 +72510,19 @@ var AuthContextProvider = function AuthContextProvider(props) {
       isAuth = _useState4[0],
       setIsAuth = _useState4[1];
 
+  Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
+    if (token) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/user?api_token=".concat(token)).then(function (res) {
+        setUser(res && res.data ? res.data : null);
+        setIsAuth(res && res.data ? true : false);
+      });
+    }
+  }, []);
+
   var login = function login(user) {
     setUser(user);
     setIsAuth(true);
+    localStorage.setItem(APP_KEY, user.api_token);
   };
 
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AuthContext.Provider, {
@@ -72679,7 +72695,9 @@ var Dashboad = function Dashboad() {
 
   console.log('isAuth: ', isAuth);
   console.log('user: ', user);
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "dashboad!!"));
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "container"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "dashboad!!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.name));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Dashboad);

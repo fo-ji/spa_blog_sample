@@ -8,9 +8,10 @@ const Dashboad = () => {
   console.log('user: ', user)
 
   return (
-    <>
-      <p>dashboad!!</p>
-    </>
+    <div className="container">
+      <div>dashboad!!</div>
+      <p>{user.name}</p>
+    </div>
   )
 }
 

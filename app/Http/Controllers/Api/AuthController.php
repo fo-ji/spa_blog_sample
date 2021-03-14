@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 use \Symfony\Component\HttpFoundation\Response;
 use Log;
 
-class RegisterController extends Controller
+class AuthController extends Controller
 {
     public function register(Request $request)
     {
@@ -39,13 +39,8 @@ class RegisterController extends Controller
     public function login(Request $request)
     {
         $user = User::where('email', $request->email)->first();
-        if ($user && Hash::check($request->password, $user->password)) {
-            $token = str_random(60);
-            $user->api_token = $token;
-            $user->save();
-        }
 
-        if ($user) {
+        if ($user && Hash::check($request->password, $user->password)) {
             return $user;
         } else {
             return response()->json(['status' => 'fail'], 401);
