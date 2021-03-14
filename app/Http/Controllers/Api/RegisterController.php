@@ -35,4 +35,20 @@ class RegisterController extends Controller
             'api_token' => str_random(60),
         ]);
     }
+
+    public function login(Request $request)
+    {
+        $user = User::where('email', $request->email)->first();
+        if ($user && Hash::check($request->password, $user->password)) {
+            $token = str_random(60);
+            $user->api_token = $token;
+            $user->save();
+        }
+
+        if ($user) {
+            return $user;
+        } else {
+            return response()->json(['status' => 'fail'], 401);
+        }
+    }
 }

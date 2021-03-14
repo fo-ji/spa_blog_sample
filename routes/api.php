@@ -16,4 +16,6 @@ use Illuminate\Http\Request;
 Route::group(['middleware' => 'api'], function() {
     // ユーザー登録
     Route::post('/register', 'Api\RegisterController@register');
+    // ユーザーログイン
+    Route::post('/login', 'Api\RegisterController@login');
 });

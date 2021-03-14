@@ -1,13 +1,16 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { AuthContext } from '../AuthContext'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 
-const Register = () => {
+const Register = (props) => {
+  const { history } = props
+  const { isAuth, login, user } = useContext(AuthContext)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [user, setUser] = useState('')
   const methods = useForm()
   const { handleSubmit, register } = methods
 
@@ -33,12 +36,16 @@ const Register = () => {
       return false
     }
     axios.post('/api/register', record).then((res) => {
-      setUser(res && res.data ? res.data : '')
-      // [TODO]ダッシュボードページへリダイレクトする
+      const user = res && res.data ? res.data : ''
+      if (user) {
+        login(user)
+        history.push('/dashboad')
+      }
     })
   }
 
   console.log('user: ', user)
+  console.log('isAuth: ', isAuth)
 
   return (
     <div className="container">
@@ -151,4 +158,4 @@ const Register = () => {
   )
 }
 
-export default Register
+export default withRouter(Register)
