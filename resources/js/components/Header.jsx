@@ -7,8 +7,11 @@ const Header = () => {
 
   return (
     <div className="top-right links">
-      {isAuth === true ? (
-        <button onClick={logout}>Logout</button>
+      {isAuth ? (
+        <>
+          <Link to={'/dashboad'}>Dashboad</Link>
+          <button onClick={logout}>Logout</button>
+        </>
       ) : (
         <>
           <Link to={'/login'}>Login</Link>

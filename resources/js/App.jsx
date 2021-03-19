@@ -4,6 +4,7 @@ import { Dashboad, Home, Register, Login } from './templates'
 import { Header } from './components'
 import '../css/app.css'
 import AppContextProvider from './AppContext'
+import AuthContextProvider from './AuthContext'
 
 const App = () => {
   return (
@@ -15,7 +16,9 @@ const App = () => {
             <Route exact path={'(/)?'} component={Home} />
             <Route exact path={'/register'} component={Register} />
             <Route exact path={'/login'} component={Login} />
-            <Route exact path={'/dashboad'} component={Dashboad} />
+            <AuthContextProvider>
+              <Route exact path={'/dashboad'} component={Dashboad} />
+            </AuthContextProvider>
           </Switch>
         </main>
       </AppContextProvider>

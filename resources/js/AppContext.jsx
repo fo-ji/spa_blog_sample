@@ -42,7 +42,9 @@ const AppContextProvider = (props) => {
   console.log('localToken: ', localToken)
 
   return (
-    <AppContext.Provider value={{ user, login, logout, history, isAuth }}>
+    <AppContext.Provider
+      value={{ user, localToken, login, logout, history, isAuth }}
+    >
       {props.children}
     </AppContext.Provider>
   )
