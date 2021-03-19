@@ -72757,12 +72757,16 @@ __webpack_require__.r(__webpack_exports__);
 
 var Dashboad = function Dashboad() {
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_1__["AppContext"]),
-      user = _useContext.user;
+      user = _useContext.user,
+      history = _useContext.history;
 
-  console.log('user: ', user);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "dashboad!!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, user.name));
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "dashboad!!"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "\u30ED\u30B0\u30A4\u30F3\u30E6\u30FC\u30B6\u30FC\uFF1A", user.name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: function onClick() {
+      return history.push('/posts');
+    }
+  }, "\u6295\u7A3F\u4E00\u89A7\u3078"));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Dashboad);

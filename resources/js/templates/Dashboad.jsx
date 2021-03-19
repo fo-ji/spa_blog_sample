@@ -2,14 +2,13 @@ import React, { useContext } from 'react'
 import { AppContext } from '../AppContext'
 
 const Dashboad = () => {
-  const { user } = useContext(AppContext)
-
-  console.log('user: ', user)
+  const { user, history } = useContext(AppContext)
 
   return (
     <div className="container">
-      <div>dashboad!!</div>
-      <p>{user.name}</p>
+      <h2>dashboad!!</h2>
+      <p>ログインユーザー：{user.name}</p>
+      <button onClick={() => history.push('/posts')}>投稿一覧へ</button>
     </div>
   )
 }
