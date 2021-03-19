@@ -1,6 +1,6 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { Dashboad, Home, Register, Login } from './templates'
+import { Dashboad, Home, PostsListPage, Register, Login } from './templates'
 import { Header } from './components'
 import '../css/app.css'
 import AppContextProvider from './AppContext'
@@ -18,6 +18,7 @@ const App = () => {
             <Route exact path={'/login'} component={Login} />
             <AuthContextProvider>
               <Route exact path={'/dashboad'} component={Dashboad} />
+              <Route exact path={'/posts'} component={PostsListPage} />
             </AuthContextProvider>
           </Switch>
         </main>
