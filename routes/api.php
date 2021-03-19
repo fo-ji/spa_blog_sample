@@ -23,4 +23,5 @@ Route::group(['middleware' => 'auth:api'], function() {
         return $request->user();
     });
     Route::post('/logout', 'Api\AuthController@logout');
+    Route::post('/post/create', 'Api\PostController@create');
 });
