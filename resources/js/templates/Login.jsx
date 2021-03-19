@@ -1,12 +1,10 @@
 import React, { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { AuthContext } from '../AuthContext'
-import { withRouter } from 'react-router-dom'
+import { AppContext } from '../AppContext'
 import axios from 'axios'
 
-const Login = (props) => {
-  const { history } = props
-  const { isAuth, login, user } = useContext(AuthContext)
+const Login = () => {
+  const { history, isAuth, login, user } = useContext(AppContext)
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const methods = useForm()
@@ -106,4 +104,4 @@ const Login = (props) => {
   )
 }
 
-export default withRouter(Login)
+export default Login

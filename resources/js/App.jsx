@@ -3,12 +3,12 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 import { Dashboad, Home, Register, Login } from './templates'
 import { Header } from './components'
 import '../css/app.css'
-import AuthContextProvider from './AuthContext'
+import AppContextProvider from './AppContext'
 
 const App = () => {
   return (
     <Router>
-      <AuthContextProvider>
+      <AppContextProvider>
         <Header />
         <main className="flex-center full-height">
           <Switch>
@@ -18,7 +18,7 @@ const App = () => {
             <Route exact path={'/dashboad'} component={Dashboad} />
           </Switch>
         </main>
-      </AuthContextProvider>
+      </AppContextProvider>
     </Router>
   )
 }

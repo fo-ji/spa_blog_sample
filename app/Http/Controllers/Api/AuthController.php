@@ -11,10 +11,14 @@ use App\Http\Requests\UserCreateRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use \Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
+// use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Log;
 
 class AuthController extends Controller
 {
+    // use AuthenticatesUsers;
+
     public function register(Request $request)
     {
         /** @var Illuminate\Validation\Validator $validator */
@@ -41,9 +45,25 @@ class AuthController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if ($user && Hash::check($request->password, $user->password)) {
+            $user->api_token = str_random(60);
+            $user->update();
+            Auth::login($user);
             return $user;
         } else {
             return response()->json(['status' => 'fail'], 401);
         }
+    }
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+        Log::Info($user);
+        $user->api_token = null;
+        $user->update();
+
+        // // [TODO]ログアウト処理
+        // Auth::logout();
+
+        return $user; 
     }
 }

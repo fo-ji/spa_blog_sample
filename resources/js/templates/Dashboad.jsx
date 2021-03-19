@@ -1,8 +1,8 @@
 import React, { useContext } from 'react'
-import { AuthContext } from '../AuthContext'
+import { AppContext } from '../AppContext'
 
 const Dashboad = () => {
-  const { isAuth, user } = useContext(AuthContext)
+  const { isAuth, user } = useContext(AppContext)
 
   console.log('isAuth: ', isAuth)
   console.log('user: ', user)

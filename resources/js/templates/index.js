@@ -1,4 +1,4 @@
-export { default as DashBoad } from './DashBoad'
+export { default as Dashboad } from './Dashboad'
 export { default as Home } from './Home'
 export { default as Register } from './Register'
 export { default as Login } from './Login'

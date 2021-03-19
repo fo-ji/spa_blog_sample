@@ -72432,7 +72432,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components */ "./resources/js/components/index.js");
 /* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../css/app.css */ "./resources/css/app.css");
 /* harmony import */ var _css_app_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_css_app_css__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _AuthContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AuthContext */ "./resources/js/AuthContext.jsx");
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./AppContext */ "./resources/js/AppContext.jsx");
 
 
 
@@ -72441,7 +72441,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var App = function App() {
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AuthContext__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_3__["Header"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["BrowserRouter"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_AppContext__WEBPACK_IMPORTED_MODULE_5__["default"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_components__WEBPACK_IMPORTED_MODULE_3__["Header"], null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("main", {
     className: "flex-center full-height"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Switch"], null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Route"], {
     exact: true,
@@ -72466,20 +72466,21 @@ var App = function App() {
 
 /***/ }),
 
-/***/ "./resources/js/AuthContext.jsx":
-/*!**************************************!*\
-  !*** ./resources/js/AuthContext.jsx ***!
-  \**************************************/
-/*! exports provided: AuthContext, default */
+/***/ "./resources/js/AppContext.jsx":
+/*!*************************************!*\
+  !*** ./resources/js/AppContext.jsx ***!
+  \*************************************/
+/*! exports provided: AppContext, default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthContext", function() { return AuthContext; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppContext", function() { return AppContext; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -72494,25 +72495,31 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-var AuthContext = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
+
+var AppContext = /*#__PURE__*/Object(react__WEBPACK_IMPORTED_MODULE_0__["createContext"])();
 var APP_KEY = 'laravelBlogSample';
+var initialToken = localStorage.getItem(APP_KEY);
 
-var AuthContextProvider = function AuthContextProvider(props) {
-  var token = localStorage.getItem(APP_KEY);
-
-  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
+var AppContextProvider = function AppContextProvider(props) {
+  var _useState = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(initialToken),
       _useState2 = _slicedToArray(_useState, 2),
-      user = _useState2[0],
-      setUser = _useState2[1];
+      localToken = _useState2[0],
+      setLocalToken = _useState2[1];
 
-  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])({}),
       _useState4 = _slicedToArray(_useState3, 2),
-      isAuth = _useState4[0],
-      setIsAuth = _useState4[1];
+      user = _useState4[0],
+      setUser = _useState4[1];
 
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(false),
+      _useState6 = _slicedToArray(_useState5, 2),
+      isAuth = _useState6[0],
+      setIsAuth = _useState6[1];
+
+  var history = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useHistory"])();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
-    if (token) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get("/api/user?api_token=".concat(token)).then(function (res) {
+    if (localToken) {
+      axios__WEBPACK_IMPORTED_MODULE_2___default.a.get("/api/user?api_token=".concat(localToken)).then(function (res) {
         setUser(res && res.data ? res.data : null);
         setIsAuth(res && res.data ? true : false);
       });
@@ -72522,19 +72529,33 @@ var AuthContextProvider = function AuthContextProvider(props) {
   var login = function login(user) {
     setUser(user);
     setIsAuth(true);
+    setLocalToken(localStorage.getItem(APP_KEY));
     localStorage.setItem(APP_KEY, user.api_token);
   };
 
-  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AuthContext.Provider, {
+  var logout = function logout() {
+    axios__WEBPACK_IMPORTED_MODULE_2___default.a.post("/api/logout?api_token=".concat(localToken)).then(function (res) {
+      setUser({});
+      setIsAuth(false);
+      setLocalToken(null);
+      localStorage.clear();
+      history.push('/');
+    });
+  };
+
+  console.log('localToken: ', localToken);
+  return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(AppContext.Provider, {
     value: {
       user: user,
       login: login,
+      logout: logout,
+      history: history,
       isAuth: isAuth
     }
   }, props.children);
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (AuthContextProvider);
+/* harmony default export */ __webpack_exports__["default"] = (AppContextProvider);
 
 /***/ }),
 
@@ -72619,17 +72640,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../AppContext */ "./resources/js/AppContext.jsx");
+
 
 
 
 var Header = function Header() {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_2__["AppContext"]),
+      isAuth = _useContext.isAuth,
+      logout = _useContext.logout;
+
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "top-right links"
-  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
+  }, isAuth === true ? /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+    onClick: logout
+  }, "Logout") : /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: '/login'
   }, "Login"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["Link"], {
     to: '/register'
-  }, "Register"));
+  }, "Register")));
 };
 
 /* harmony default export */ __webpack_exports__["default"] = (Header);
@@ -72673,9 +72702,9 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 
 /***/ }),
 
-/***/ "./resources/js/templates/DashBoad.jsx":
+/***/ "./resources/js/templates/Dashboad.jsx":
 /*!*********************************************!*\
-  !*** ./resources/js/templates/DashBoad.jsx ***!
+  !*** ./resources/js/templates/Dashboad.jsx ***!
   \*********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
@@ -72684,12 +72713,12 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render( /*#__PURE__*/react__WEB
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _AuthContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../AuthContext */ "./resources/js/AuthContext.jsx");
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../AppContext */ "./resources/js/AppContext.jsx");
 
 
 
 var Dashboad = function Dashboad() {
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AuthContext__WEBPACK_IMPORTED_MODULE_1__["AuthContext"]),
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_1__["AppContext"]),
       isAuth = _useContext.isAuth,
       user = _useContext.user;
 
@@ -72741,10 +72770,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_hook_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/index.esm.js");
-/* harmony import */ var _AuthContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../AuthContext */ "./resources/js/AuthContext.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../AppContext */ "./resources/js/AppContext.jsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -72762,11 +72790,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-var Login = function Login(props) {
-  var history = props.history;
-
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AuthContext__WEBPACK_IMPORTED_MODULE_2__["AuthContext"]),
+var Login = function Login() {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_2__["AppContext"]),
+      history = _useContext.history,
       isAuth = _useContext.isAuth,
       login = _useContext.login,
       user = _useContext.user;
@@ -72794,7 +72820,7 @@ var Login = function Login(props) {
   };
 
   var onSubmit = function onSubmit(record) {
-    axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/login', record).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/login', record).then(function (res) {
       var user = res && res.data ? res.data : '';
 
       if (user) {
@@ -72863,7 +72889,7 @@ var Login = function Login(props) {
   }, "Login")))))))));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Login));
+/* harmony default export */ __webpack_exports__["default"] = (Login);
 
 /***/ }),
 
@@ -72879,10 +72905,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_hook_form__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-hook-form */ "./node_modules/react-hook-form/dist/index.esm.js");
-/* harmony import */ var _AuthContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../AuthContext */ "./resources/js/AuthContext.jsx");
-/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _AppContext__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../AppContext */ "./resources/js/AppContext.jsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
 function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
@@ -72900,11 +72925,9 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-var Register = function Register(props) {
-  var history = props.history;
-
-  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AuthContext__WEBPACK_IMPORTED_MODULE_2__["AuthContext"]),
+var Register = function Register() {
+  var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_2__["AppContext"]),
+      history = _useContext.history,
       isAuth = _useContext.isAuth,
       login = _useContext.login,
       user = _useContext.user;
@@ -72955,7 +72978,7 @@ var Register = function Register(props) {
       return false;
     }
 
-    axios__WEBPACK_IMPORTED_MODULE_4___default.a.post('/api/register', record).then(function (res) {
+    axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/register', record).then(function (res) {
       var user = res && res.data ? res.data : '';
 
       if (user) {
@@ -73057,7 +73080,7 @@ var Register = function Register(props) {
   }, "Register")))))))));
 };
 
-/* harmony default export */ __webpack_exports__["default"] = (Object(react_router_dom__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(Register));
+/* harmony default export */ __webpack_exports__["default"] = (Register);
 
 /***/ }),
 
@@ -73065,13 +73088,13 @@ var Register = function Register(props) {
 /*!*****************************************!*\
   !*** ./resources/js/templates/index.js ***!
   \*****************************************/
-/*! exports provided: DashBoad, Home, Register, Login */
+/*! exports provided: Dashboad, Home, Register, Login */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _DashBoad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./DashBoad */ "./resources/js/templates/DashBoad.jsx");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "DashBoad", function() { return _DashBoad__WEBPACK_IMPORTED_MODULE_0__["default"]; });
+/* harmony import */ var _Dashboad__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Dashboad */ "./resources/js/templates/Dashboad.jsx");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Dashboad", function() { return _Dashboad__WEBPACK_IMPORTED_MODULE_0__["default"]; });
 
 /* harmony import */ var _Home__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Home */ "./resources/js/templates/Home.jsx");
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "Home", function() { return _Home__WEBPACK_IMPORTED_MODULE_1__["default"]; });
