@@ -18,7 +18,8 @@ const useStyles = makeStyles({
   },
 })
 
-const PostCard = () => {
+const PostCard = (props) => {
+  const { post } = props
   const classes = useStyles()
 
   return (
@@ -26,10 +27,10 @@ const PostCard = () => {
       <Card className={classes.root}>
         <CardContent>
           <Typography variant="body2" component="p">
-            タイトル：
+            タイトル：{post.title}
           </Typography>
           <Typography variant="body2" component="p">
-            内容：
+            内容：{post.content}
           </Typography>
         </CardContent>
         <div className={classes.buttonArea}>
@@ -42,7 +43,7 @@ const PostCard = () => {
           variant="body2"
           component="div"
         >
-          投稿日時：
+          投稿日時：{post.created_at}
         </Typography>
       </Card>
     </>
