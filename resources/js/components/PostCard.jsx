@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AppContext } from '../AppContext'
+
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
@@ -19,8 +21,13 @@ const useStyles = makeStyles({
 })
 
 const PostCard = (props) => {
+  const { history } = useContext(AppContext)
   const { post } = props
   const classes = useStyles()
+
+  const handleClickDetail = () => {
+    history.push(`/post/${post.id}`)
+  }
 
   return (
     <>
@@ -34,7 +41,7 @@ const PostCard = (props) => {
           </Typography>
         </CardContent>
         <div className={classes.buttonArea}>
-          <Button size="small" variant="outlined">
+          <Button onClick={handleClickDetail} size="small" variant="outlined">
             詳細
           </Button>
         </div>

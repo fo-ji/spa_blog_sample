@@ -1,6 +1,13 @@
 import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
-import { Dashboad, Home, PostsListPage, Register, Login } from './templates'
+import {
+  Dashboad,
+  Home,
+  PostDetailPage,
+  PostsListPage,
+  Register,
+  Login,
+} from './templates'
 import { Header } from './components'
 import '../css/app.css'
 import AppContextProvider from './AppContext'
@@ -19,6 +26,11 @@ const App = () => {
             <AuthContextProvider>
               <Route exact path={'/dashboad'} component={Dashboad} />
               <Route exact path={'/posts'} component={PostsListPage} />
+              <Route
+                exact
+                path={'/post/:resourceId'}
+                component={PostDetailPage}
+              />
             </AuthContextProvider>
           </Switch>
         </main>

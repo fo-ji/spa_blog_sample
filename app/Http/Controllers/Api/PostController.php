@@ -57,9 +57,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function detail($resourceId)
     {
-        //
+        $post = Post::where('id', $resourceId)->first();
+
+        return $post;
     }
 
     /**

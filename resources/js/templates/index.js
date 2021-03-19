@@ -1,5 +1,6 @@
 export { default as Dashboad } from './Dashboad'
 export { default as Home } from './Home'
 export { default as Login } from './Login'
+export { default as PostDetailPage } from './PostDetailPage'
 export { default as PostsListPage } from './PostsListPage'
 export { default as Register } from './Register'
