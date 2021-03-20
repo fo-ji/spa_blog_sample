@@ -7,6 +7,7 @@ const Register = () => {
   const { history, isAuth, login, user } = useContext(AppContext)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [role, setRole] = useState(1)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const methods = useForm()
@@ -28,6 +29,10 @@ const Register = () => {
     setConfirmPassword(e.target.value)
   }
 
+  const handleChange = (e) => {
+    setRole(e.target.value)
+  }
+
   const onSubmit = (record) => {
     if (password !== confirmPassword) {
       alert('パスワードが一致しません。もう一度お試しください。')
@@ -41,9 +46,6 @@ const Register = () => {
       }
     })
   }
-
-  console.log('user: ', user)
-  console.log('isAuth: ', isAuth)
 
   return (
     <div className="container">
@@ -93,6 +95,26 @@ const Register = () => {
                       type="email"
                       value={email}
                     />
+                  </div>
+                </div>
+                <div className="form-group row">
+                  <label
+                    htmlFor="role"
+                    className="col-md-4 col-form-label text-md-right"
+                  >
+                    Role
+                  </label>
+                  <div className="col-md-6">
+                    <select
+                      name="role"
+                      onChange={handleChange}
+                      ref={register}
+                      required
+                      value={role}
+                    >
+                      <option value={1}>管理者</option>
+                      <option value={2}>一般</option>
+                    </select>
                   </div>
                 </div>
                 <div className="form-group row">

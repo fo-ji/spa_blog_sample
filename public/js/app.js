@@ -96236,10 +96236,10 @@ var AppContextProvider = function AppContextProvider(props) {
   }, []);
 
   var login = function login(user) {
+    localStorage.setItem(APP_KEY, user.api_token);
     setUser(user);
     setIsAuth(true);
     setLocalToken(localStorage.getItem(APP_KEY));
-    localStorage.setItem(APP_KEY, user.api_token);
   };
 
   var logout = function logout() {
@@ -97161,15 +97161,20 @@ var Register = function Register() {
       email = _useState4[0],
       setEmail = _useState4[1];
 
-  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+  var _useState5 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(1),
       _useState6 = _slicedToArray(_useState5, 2),
-      password = _useState6[0],
-      setPassword = _useState6[1];
+      role = _useState6[0],
+      setRole = _useState6[1];
 
   var _useState7 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
       _useState8 = _slicedToArray(_useState7, 2),
-      confirmPassword = _useState8[0],
-      setConfirmPassword = _useState8[1];
+      password = _useState8[0],
+      setPassword = _useState8[1];
+
+  var _useState9 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])(''),
+      _useState10 = _slicedToArray(_useState9, 2),
+      confirmPassword = _useState10[0],
+      setConfirmPassword = _useState10[1];
 
   var methods = Object(react_hook_form__WEBPACK_IMPORTED_MODULE_1__["useForm"])();
   var handleSubmit = methods.handleSubmit,
@@ -97191,6 +97196,10 @@ var Register = function Register() {
     setConfirmPassword(e.target.value);
   };
 
+  var handleChange = function handleChange(e) {
+    setRole(e.target.value);
+  };
+
   var onSubmit = function onSubmit(record) {
     if (password !== confirmPassword) {
       alert('パスワードが一致しません。もう一度お試しください。');
@@ -97207,8 +97216,6 @@ var Register = function Register() {
     });
   };
 
-  console.log('user: ', user);
-  console.log('isAuth: ', isAuth);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "container"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -97256,6 +97263,23 @@ var Register = function Register() {
     type: "email",
     value: email
   }))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "form-group row"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+    htmlFor: "role",
+    className: "col-md-4 col-form-label text-md-right"
+  }, "Role"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+    className: "col-md-6"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+    name: "role",
+    onChange: handleChange,
+    ref: register,
+    required: true,
+    value: role
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: 1
+  }, "\u7BA1\u7406\u8005"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+    value: 2
+  }, "\u4E00\u822C")))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: "form-group row"
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
     htmlFor: "password",

@@ -23,10 +23,10 @@ const AppContextProvider = (props) => {
   }, [])
 
   const login = (user) => {
+    localStorage.setItem(APP_KEY, user.api_token)
     setUser(user)
     setIsAuth(true)
     setLocalToken(localStorage.getItem(APP_KEY))
-    localStorage.setItem(APP_KEY, user.api_token)
   }
 
   const logout = () => {
