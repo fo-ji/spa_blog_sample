@@ -27,9 +27,10 @@ const useStyles = makeStyles({
 })
 
 const PostDetailPage = () => {
-  const { history, localToken } = useContext(AppContext)
+  const { history, localToken, user } = useContext(AppContext)
   const { resourceId } = useParams()
   const [post, setPost] = useState({})
+  const [logs, setLogs] = useState([])
 
   const classes = useStyles()
 
@@ -37,7 +38,16 @@ const PostDetailPage = () => {
     axios.get(`/api/post/${resourceId}?api_token=${localToken}`).then((res) => {
       setPost(res && res.data ? res.data : [])
     })
+    if (user.role === 1) {
+      axios
+        .get(`/api/post/${resourceId}/logs?api_token=${localToken}`)
+        .then((res) => {
+          setLogs(res && res.data ? res.data : [])
+        })
+    }
   }, [])
+
+  console.log('logs: ', logs)
 
   return (
     <div className={classes.wrapper}>
@@ -57,6 +67,27 @@ const PostDetailPage = () => {
           投稿日時：{post.created_at}
         </Typography>
       </Card>
+      {user.role === 1 && (
+        <Card className={classes.container} variant="outlined">
+          <AppBar position="static">
+            <Typography variant="h6">閲覧履歴</Typography>
+          </AppBar>
+          <Typography variant="body2" component="p">
+            閲覧者数：{logs.length}
+          </Typography>
+          {logs.length > 0 &&
+            logs.map((log, idx) => (
+              <CardContent key={idx}>
+                <Typography variant="body2" component="p">
+                  閲覧者：{log.user_name}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  閲覧日時：{log.created_at}
+                </Typography>
+              </CardContent>
+            ))}
+        </Card>
+      )}
       <div className={classes.buttonArea}>
         <Button variant="contained" onClick={() => history.goBack()}>
           一覧へ戻る

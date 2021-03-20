@@ -96952,7 +96952,8 @@ var useStyles = Object(_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_4__["ma
 var PostDetailPage = function PostDetailPage() {
   var _useContext = Object(react__WEBPACK_IMPORTED_MODULE_0__["useContext"])(_AppContext__WEBPACK_IMPORTED_MODULE_2__["AppContext"]),
       history = _useContext.history,
-      localToken = _useContext.localToken;
+      localToken = _useContext.localToken,
+      user = _useContext.user;
 
   var _useParams = Object(react_router_dom__WEBPACK_IMPORTED_MODULE_1__["useParams"])(),
       resourceId = _useParams.resourceId;
@@ -96962,12 +96963,24 @@ var PostDetailPage = function PostDetailPage() {
       post = _useState2[0],
       setPost = _useState2[1];
 
+  var _useState3 = Object(react__WEBPACK_IMPORTED_MODULE_0__["useState"])([]),
+      _useState4 = _slicedToArray(_useState3, 2),
+      logs = _useState4[0],
+      setLogs = _useState4[1];
+
   var classes = useStyles();
   Object(react__WEBPACK_IMPORTED_MODULE_0__["useEffect"])(function () {
     axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/post/".concat(resourceId, "?api_token=").concat(localToken)).then(function (res) {
       setPost(res && res.data ? res.data : []);
     });
+
+    if (user.role === 1) {
+      axios__WEBPACK_IMPORTED_MODULE_3___default.a.get("/api/post/".concat(resourceId, "/logs?api_token=").concat(localToken)).then(function (res) {
+        setLogs(res && res.data ? res.data : []);
+      });
+    }
   }, []);
+  console.log('logs: ', logs);
   return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.wrapper
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__["default"], {
@@ -96986,7 +96999,27 @@ var PostDetailPage = function PostDetailPage() {
   }, "\u5185\u5BB9\uFF1A", post.content)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9__["default"], {
     variant: "body2",
     component: "div"
-  }, "\u6295\u7A3F\u65E5\u6642\uFF1A", post.created_at)), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+  }, "\u6295\u7A3F\u65E5\u6642\uFF1A", post.created_at)), user.role === 1 && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Card__WEBPACK_IMPORTED_MODULE_5__["default"], {
+    className: classes.container,
+    variant: "outlined"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_AppBar__WEBPACK_IMPORTED_MODULE_8__["default"], {
+    position: "static"
+  }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    variant: "h6"
+  }, "\u95B2\u89A7\u5C65\u6B74")), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9__["default"], {
+    variant: "body2",
+    component: "p"
+  }, "\u95B2\u89A7\u8005\u6570\uFF1A", logs.length), logs.length > 0 && logs.map(function (log, idx) {
+    return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_CardContent__WEBPACK_IMPORTED_MODULE_6__["default"], {
+      key: idx
+    }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      variant: "body2",
+      component: "p"
+    }, "\u95B2\u89A7\u8005\uFF1A", log.user_name), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Typography__WEBPACK_IMPORTED_MODULE_9__["default"], {
+      variant: "body2",
+      component: "div"
+    }, "\u95B2\u89A7\u65E5\u6642\uFF1A", log.created_at));
+  })), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
     className: classes.buttonArea
   }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_material_ui_core_Button__WEBPACK_IMPORTED_MODULE_7__["default"], {
     variant: "contained",

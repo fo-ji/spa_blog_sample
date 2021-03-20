@@ -125,9 +125,18 @@ class PostController extends Controller
     {
         $user = $request->user();
 
-        $read = new Read;
-        $read->user_id = $user->id;
-        $read->post_id = $resourceId;
-        $read->save();
+        $registeredRead = Read::where([
+            ['user_id', $user->id],
+            ['post_id', $resourceId]
+        ])->first();
+
+        if (isset($registeredRead)) {
+            return;
+        } else {
+            $read = new Read;
+            $read->user_id = $user->id;
+            $read->post_id = $resourceId;
+            $read->save();
+        }
     }
 }

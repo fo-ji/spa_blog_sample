@@ -27,4 +27,5 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::get('/post/{resourceId}', 'Api\PostController@detail');
     Route::post('/post/create', 'Api\PostController@create');
     Route::post('/post/{resourceId}/read', 'Api\PostController@read');
+    Route::get('/post/{resourceId}/logs', 'Api\AdminController@logs');
 });
