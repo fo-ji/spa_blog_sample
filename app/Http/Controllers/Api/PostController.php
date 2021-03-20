@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Post;
+use App\Read;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Log;
@@ -15,9 +16,31 @@ class PostController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $posts = Post::latest()->get();
+        $user = $request->user();
+
+        $reads = Read::where('user_id', $user->id)->get();
+        $postIds = [];
+        foreach ($reads as $read) {
+            $postIds[] = $read->post_id;
+        }
+
+        $posts = [];
+
+        $unreadPosts = Post::whereNotIn('id', $postIds)->get();
+        foreach ($unreadPosts as $post) {
+            $post->read = false;
+            $posts[] = $post;
+        }
+
+        $readPosts = Post::whereIn('id', $postIds)->get();
+        foreach ($readPosts as $post) {
+            $post->read = true;
+            $posts[] = $post;
+        }
+
+        // [TODO]並び替え必要
 
         return $posts;
     }
@@ -96,5 +119,15 @@ class PostController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function read(Request $request, $resourceId)
+    {
+        $user = $request->user();
+
+        $read = new Read;
+        $read->user_id = $user->id;
+        $read->post_id = $resourceId;
+        $read->save();
     }
 }

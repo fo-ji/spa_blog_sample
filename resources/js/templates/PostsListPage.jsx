@@ -40,13 +40,20 @@ const PostsListPage = () => {
     setOpen(true)
   }
 
+  console.log('posts: ', posts)
+
   return (
     <div className={classes.container}>
       <div className={classes.topButton}>
         <Button variant="contained" onClick={handleClickOpen}>
           新規投稿
         </Button>
-        <PostDialog open={open} setOpen={setOpen} />
+        <PostDialog
+          open={open}
+          posts={posts}
+          setOpen={setOpen}
+          setPosts={setPosts}
+        />
       </div>
       <AppBar position="static">
         <Typography variant="h6" className={classes.title}>

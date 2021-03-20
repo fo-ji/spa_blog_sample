@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { AppContext } from '../AppContext'
+import axios from 'axios'
 
 import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card'
@@ -18,20 +19,40 @@ const useStyles = makeStyles({
   cardFooter: {
     background: 'lightGray',
   },
+  readLabel: {
+    textAlign: 'left',
+    marginLeft: 10,
+    color: 'gray',
+  },
+  unreadLabel: {
+    textAlign: 'left',
+    marginLeft: 10,
+    color: 'green',
+  },
 })
 
 const PostCard = (props) => {
-  const { history } = useContext(AppContext)
+  const { history, localToken } = useContext(AppContext)
   const { post } = props
   const classes = useStyles()
 
   const handleClickDetail = () => {
+    axios
+      .post(`/api/post/${post.id}/read?api_token=${localToken}`)
+      .then((res) => {
+        console.log('res: ', res)
+      })
     history.push(`/post/${post.id}`)
   }
 
   return (
     <>
       <Card className={classes.root}>
+        {post.read ? (
+          <p className={classes.readLabel}>既読</p>
+        ) : (
+          <p className={classes.unreadLabel}>未読</p>
+        )}
         <CardContent>
           <Typography variant="body2" component="p">
             タイトル：{post.title}

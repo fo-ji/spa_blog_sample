@@ -22,11 +22,10 @@ const useStyles = makeStyles((theme) => ({
 }))
 
 const PostDialog = (props) => {
-  const { open, setOpen } = props
+  const { open, setOpen, setPosts, posts } = props
   const { history, localToken } = useContext(AppContext)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
-  const [post, setPost] = useState({})
   const methods = useForm()
   const { handleSubmit, register } = methods
 
@@ -48,14 +47,16 @@ const PostDialog = (props) => {
     axios
       .post(`/api/post/create?api_token=${localToken}`, record)
       .then((res) => {
-        setPost(res && res.data ? res.data : {})
+        if (res.data) {
+          const result = res.data
+          setPosts([result, ...posts])
+        }
         setTitle('')
         setContent('')
-        // [TODO]詳細ページへリンク
+        setOpen(false)
       })
+    history.push('/posts')
   }
-
-  console.log('post: ', post)
 
   return (
     <Dialog open={open} onClose={handleClose}>
