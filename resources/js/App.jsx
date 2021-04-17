@@ -18,7 +18,7 @@ const App = () => {
     <Router>
       <AppContextProvider>
         <Header />
-        <main className="flex-center full-height">
+        <main className="flex-center">
           <Switch>
             <Route exact path={'(/)?'} component={Home} />
             <Route exact path={'/register'} component={Register} />
